@@ -13,6 +13,7 @@
 #include "NMPTUtils.h"
 
 #include "geometry_msgs/Point.h"
+#include "ros_nmpt_saliency/targets.h"
 
 using namespace std;
 using namespace cv; 
@@ -76,7 +77,10 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 		lqrpt = salientSpot.getCurrentPosition();
 		pt.x=lqrpt[0];
 		pt.y=lqrpt[1];
-		pub.publish(pt);
+		pt.z=0;
+		ros_nmpt_saliency::targets trg;
+		trg.positions.push_back(pt);
+		pub.publish(trg);
 		/*
 		circle(vizRect, Point(lqrpt[0]*sal.cols, lqrpt[1]*sal.rows), 6, CV_RGB(0,0,255));
 		circle(vizRect, Point(lqrpt[0]*sal.cols, lqrpt[1]*sal.rows), 5, CV_RGB(0,0,255));
@@ -117,7 +121,7 @@ int main(int argc, char **argv)
      image_transport::Subscriber sub = it.subscribe("/camera/image_raw", 1, imageCallback);
      
      
-     pub = nh.advertise<geometry_msgs::Point>("/nmpt_saliency_point", 50);
+     pub = nh.advertise<ros_nmpt_saliency::targets>("/nmpt_saliency_point", 50);
      
      salientSpot.setTrackerTarget(lqrpt);
      bt.blockRestart(1);

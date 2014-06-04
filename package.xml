@@ -48,6 +48,8 @@
   <build_depend>geometry_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>opencv</build_depend>
+  <build_depend>message_generation</build_depend>
+  
   <run_depend>cv_bridge</run_depend>
   <run_depend>opencv</run_depend>
   <run_depend>image_transport</run_depend>
@@ -56,6 +58,7 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
