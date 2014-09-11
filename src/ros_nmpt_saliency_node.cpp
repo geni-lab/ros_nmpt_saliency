@@ -118,7 +118,7 @@ int main(int argc, char **argv)
      //cvNamedWindow("view");
      cvStartWindowThread();
      image_transport::ImageTransport it(nh);
-     image_transport::Subscriber sub = it.subscribe("/camera/image_raw", 1, imageCallback);
+     image_transport::Subscriber sub = it.subscribe("/cv_camera/image_raw", 1, imageCallback);
      
      
      pub = nh.advertise<ros_nmpt_saliency::targets>("/nmpt_saliency_point", 50);
