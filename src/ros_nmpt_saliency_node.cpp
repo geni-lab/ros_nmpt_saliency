@@ -26,6 +26,7 @@ using namespace cv;
 	Mat im, im2, viz, sal ;
 	ros::Publisher pub;
 	geometry_msgs::Point pt;
+	bool debug_mode;
 	
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -102,8 +103,11 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 		
 		imshow("FastSUN Salience", viz);
 		*/ 
-
-     
+	if (debug_mode){
+	imshow("view",viz);
+	waitKey(1);
+	}
+	     
    }
    catch (...)
    {
@@ -115,10 +119,11 @@ int main(int argc, char **argv)
    {
      ros::init(argc, argv, "image_listener");
      ros::NodeHandle nh;
-     //cvNamedWindow("view");
+	nh.getParam("debug",debug_mode);
+     if (debug_mode) cvNamedWindow("view");
      cvStartWindowThread();
      image_transport::ImageTransport it(nh);
-     image_transport::Subscriber sub = it.subscribe("/cv_camera/image_raw", 1, imageCallback);
+     image_transport::Subscriber sub = it.subscribe("/camera/image_raw", 1, imageCallback);
      
      
      pub = nh.advertise<ros_nmpt_saliency::targets>("/nmpt_saliency_point", 50);
